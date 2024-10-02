@@ -34,3 +34,26 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+npm install @radix-ui/react-icons @radix-ui/themes shadcn-ui tailwindcss postcss autoprefixer @prisma/client @google/generative-ai
+
+# Install development dependencies
+npm install -D prisma
+
+# Initialize Prisma
+npx prisma init
+
+# Set up Tailwind CSS
+npx tailwindcss init -p
+
+# Create a components directory
+mkdir src/components
+
+# Create a lib directory for utility functions
+mkdir src/lib
+
+# Create an api directory for API routes
+mkdir src/pages/api
+
+# Create a styles directory for global styles
+mkdir src/styles

@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add any global styles here */
+
+/* Typography */
+body {
+  @apply font-sans text-gray-900;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold text-gray-800;
+}
+
+p {
+  @apply mb-4 text-gray-700;
+}
+
+/* Buttons */
+.btn {
+  @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700;
+}
+
+.btn-secondary {
+  @apply bg-gray-600 text-white hover:bg-gray-700;
+}
+
+/* Cards */
+.card {
+  @apply bg-white shadow-md rounded-lg overflow-hidden;
+}
+
+.card-header {
+  @apply px-6 py-4 border-b border-gray-200;
+}
+
+.card-title {
+  @apply text-lg font-semibold text-gray-800;
+}
+
+.card-content {
+  @apply p-6;
+}
+
+/* Forms */
+.input {
+  @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+}
+
+.label {
+  @apply block text-sm font-medium text-gray-700;
+}
+
+/* Alerts */
+.alert {
+  @apply p-4 border-l-4;
+}
+
+.alert-success {
+  @apply bg-green-50 border-green-400 text-green-700;
+}
+
+.alert-error {
+  @apply bg-red-50 border-red-400 text-red-700;
+}
+
+/* Modals */
+.modal {
+  @apply fixed z-10 inset-0 overflow-y-auto;
+}
+
+.modal-overlay {
+  @apply fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity;
+}
+
+.modal-content {
+  @apply bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full;
+}
+
+/* Utility classes */
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
+.text-center {
+  @apply text-center;
+}
+
+.mt-4 {
+  @apply mt-4;
+}
+
+.mb-4 {
+  @apply mb-4;
+}
+
+.p-4 {
+  @apply p-4;
+}
+
+.rounded {
+  @apply rounded;
+}
+
+.shadow {
+  @apply shadow;
+}
