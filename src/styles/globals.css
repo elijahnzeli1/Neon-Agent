@@ -88,25 +88,25 @@ p {
 }
 
 .text-center {
-  @apply text-center;
+  text-align: center; /* Replace @apply text-center; */
 }
 
 .mt-4 {
-  @apply mt-4;
+  margin-top: 1rem; /* Replace @apply mt-4; */
 }
 
 .mb-4 {
-  @apply mb-4;
+  margin-bottom: 1rem; /* Replace @apply mb-4; */
 }
 
 .p-4 {
-  @apply p-4;
+  padding: 1rem; /* Replace @apply p-4; */
 }
 
 .rounded {
-  @apply rounded;
+  border-radius: 0.25rem; /* Replace @apply rounded; */
 }
 
 .shadow {
-  @apply shadow;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1); /* Replace @apply shadow; */
 }

@@ -1,71 +1,80 @@
-// src/components/CodeEditor.tsx
-import React, { useRef, useEffect } from 'react';
-import * as monaco from 'monaco-editor';
-import { generateCode } from '../lib/gemini';
+import React from 'react';
+import dynamic from 'next/dynamic';
+import { generateCode } from '@/lib/gemini';
+
+const MonacoEditor = dynamic(() => import('@monaco-editor/react'), {
+  ssr: false,
+});
+
 
 interface CodeEditorProps {
+
   value: string;
+
   onChange: (value: string) => void;
+
   language?: string;
+
 }
 
+
+// interface CodeEditorProps {
+//   value: string;
+//   onChange: (value: string) => void;
+//   language?: string;
+// }
+
 const CodeEditor: React.FC<CodeEditorProps> = ({ value, onChange, language = 'typescript' }) => {
-  const editorRef = useRef<HTMLDivElement>(null);
-  const monacoRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const handleEditorDidMount = (editor: any, monaco: any) => {
+    // Custom completion provider
+    monaco.languages.registerCompletionItemProvider(language, {
+      provideCompletionItems: async (model: any, position: any) => {
+        const wordUntilPosition = model.getWordUntilPosition(position);
+        const word = wordUntilPosition.word;
 
-  useEffect(() => {
-    if (editorRef.current) {
-      monacoRef.current = monaco.editor.create(editorRef.current, {
-        value,
-        language,
-        theme: 'vs-dark',
-        automaticLayout: true,
-      });
+        if (word.length < 2) return { suggestions: [] };
 
-      monacoRef.current.onDidChangeModelContent(() => {
-        onChange(monacoRef.current?.getValue() || '');
-      });
+        const lineContent = model.getLineContent(position.lineNumber);
+        const prompt = `Complete the following code: ${lineContent}`;
 
-      // Custom completion provider
-      monaco.languages.registerCompletionItemProvider(language, {
-        provideCompletionItems: async (model, position) => {
-          const wordUntilPosition = model.getWordUntilPosition(position);
-          const word = wordUntilPosition.word;
-
-          if (word.length < 2) return { suggestions: [] };
-
-          const lineContent = model.getLineContent(position.lineNumber);
-          const prompt = `Complete the following code: ${lineContent}`;
-
-          try {
-            const completion = await generateCode(prompt);
-            return {
-              suggestions: [
-                {
-                  label: completion,
-                  kind: monaco.languages.CompletionItemKind.Snippet,
-                  insertText: completion,
-                  range: {
-                    startLineNumber: position.lineNumber,
-                    endLineNumber: position.lineNumber,
-                    startColumn: wordUntilPosition.startColumn,
-                    endColumn: wordUntilPosition.endColumn,
-                  },
+        try {
+          const completion = await generateCode(prompt);
+          return {
+            suggestions: [
+              {
+                label: completion,
+                kind: monaco.languages.CompletionItemKind.Snippet,
+                insertText: completion,
+                range: {
+                  startLineNumber: position.lineNumber,
+                  endLineNumber: position.lineNumber,
+                  startColumn: wordUntilPosition.startColumn,
+                  endColumn: wordUntilPosition.endColumn,
                 },
-              ],
-            };
-          } catch (error) {
-            console.error('Error generating completion:', error);
-            return { suggestions: [] };
-          }
-        },
-      });
-    }
+              },
+            ],
+          };
+        } catch (error) {
+          console.error('Error generating completion:', error);
+          return { suggestions: [] };
+        }
+      },
+    });
+  };
 
-    return () => monacoRef.current?.dispose();
-  }, [value, onChange, language]);
-
-  return <div ref={editorRef} style={{ height: '400px' }} />;
+  return (
+    <MonacoEditor
+      height="400px"
+      language={language}
+      theme="vs-dark"
+      value={value}
+      onChange={(value) => onChange(value || '')}
+      onMount={handleEditorDidMount}
+      options={{
+        automaticLayout: true,
+      }}
+    />
+  );
 };
 
-export default CodeEditor;
+export default CodeEditor; //npm install @monaco-editor/react
