@@ -3,6 +3,16 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import prisma from '../../lib/prisma';
 
+interface ExtendedSession {
+  user: {
+    id: string;
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  };
+}
+
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
 
@@ -11,6 +21,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'GET') {
+    if (!session.user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
     const snippets = await prisma.codeSnippet.findMany({
       where: { userId: session.user.id },
     });
