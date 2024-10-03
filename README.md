@@ -57,3 +57,6 @@ mkdir src/pages/api
 
 # Create a styles directory for global styles
 mkdir src/styles
+
+npm install -g prisma
+npm list --depth=0 prisma
