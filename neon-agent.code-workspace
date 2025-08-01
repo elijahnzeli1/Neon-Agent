@@ -1,0 +1,105 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.exclude": {
+            "node_modules": true,
+            "out": true,
+            "dist": true,
+            "*.vsix": true
+        },
+        "search.exclude": {
+            "node_modules": true,
+            "out": true,
+            "dist": true
+        },
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4,
+        "eslint.validate": [
+            "javascript"
+        ],
+        "eslint.workingDirectories": [
+            "."
+        ]
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-vscode.vscode-typescript-next",
+            "ms-vscode.vscode-json",
+            "dbaeumer.vscode-eslint"
+        ]
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "Run Extension",
+                "type": "extensionHost",
+                "request": "launch",
+                "args": [
+                    "--extensionDevelopmentPath=${workspaceFolder}"
+                ],
+                "outFiles": [
+                    "${workspaceFolder}/out/**/*.js"
+                ],
+                "preLaunchTask": "npm: compile"
+            },
+            {
+                "name": "Run Server",
+                "type": "node",
+                "request": "launch",
+                "program": "${workspaceFolder}/src/server.js",
+                "args": [],
+                "console": "integratedTerminal",
+                "env": {
+                    "NODE_ENV": "development"
+                }
+            }
+        ]
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "type": "npm",
+                "script": "compile",
+                "group": "build",
+                "presentation": {
+                    "panel": "shared",
+                    "reveal": "silent",
+                    "clear": false
+                },
+                "problemMatcher": []
+            },
+            {
+                "type": "npm",
+                "script": "watch",
+                "group": {
+                    "kind": "build",
+                    "isDefault": true
+                },
+                "isBackground": true,
+                "presentation": {
+                    "panel": "shared",
+                    "reveal": "silent",
+                    "clear": false
+                },
+                "problemMatcher": []
+            },
+            {
+                "type": "npm",
+                "script": "start",
+                "group": "test",
+                "presentation": {
+                    "panel": "shared",
+                    "reveal": "always",
+                    "clear": false
+                },
+                "problemMatcher": []
+            }
+        ]
+    }
+}

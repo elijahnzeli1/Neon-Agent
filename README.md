@@ -1,36 +1,150 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Neon Agent - AI-Powered VS Code Extension
 
-## Getting Started
+Neon Agent is an intelligent coding assistant that brings AI-powered features directly into your VS Code editor. Inspired by modern AI coding tools, it provides real-time code analysis, intelligent suggestions, and interactive chat capabilities.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 🤖 Interactive AI Chat
+- Built-in chat interface for coding assistance
+- Context-aware responses based on your current file/selection
+- Export chat history for reference
+- Real-time conversation with AI
+
+### 🔍 Smart Code Analysis
+- Real-time code quality analysis
+- Performance optimization suggestions
+- Security vulnerability detection
+- Best practices recommendations
+
+### ⚡ Intelligent Code Completion
+- AI-powered code suggestions
+- Context-aware completions
+- Multi-language support
+
+### 🛠 Code Actions & Refactoring
+- Quick fixes for common issues
+- AI-powered refactoring suggestions
+- Code explanation and documentation
+
+### 🌐 Express.js Backend
+- RESTful API for AI services
+- WebSocket support for real-time communication
+- Modular Express.js architecture
+
+## Installation
+
+1. Clone or download this repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up your AI API key in VS Code settings
+4. Press `F5` to run the extension in development mode
+
+## Configuration
+
+Open VS Code settings and configure Neon Agent:
+
+- `neon-agent.apiKey`: Your Google AI API key
+- `neon-agent.model`: AI model to use (default: gemini-pro)
+- `neon-agent.autoSuggest`: Enable automatic code suggestions
+
+## Usage
+
+### Getting Started
+1. Install the extension
+2. Set your API key in settings
+3. Use `Ctrl+Shift+N` (or `Cmd+Shift+N` on Mac) to open the chat
+4. Start coding and get real-time suggestions!
+
+### Commands
+- `Neon Agent: Activate` - Enable active monitoring
+- `Neon Agent: Open Chat` - Open the chat interface
+- `Neon Agent: Analyze Code` - Analyze selected code or file
+
+### Context Menu Actions
+- Right-click in editor or explorer to access Neon Agent features
+- Analyze files, explain code, or get refactoring suggestions
+
+## Architecture
+
+### Extension Structure
+```
+src/
+├── extension.js              # Main extension entry point
+├── server.js                 # Express.js server
+├── services/
+│   ├── AIService.js          # AI integration service
+│   └── CodeAnalyzer.js       # Code analysis engine
+└── providers/
+    ├── NeonAgentProvider.js  # Core extension provider
+    └── ChatWebviewProvider.js # Chat interface provider
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Express.js API Endpoints
+- `POST /api/chat` - AI chat interface
+- `POST /api/analyze` - Code analysis
+- `POST /api/generate` - Code generation
+- `POST /api/complete` - Code completion
+- WebSocket support for real-time communication
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Running in Development
+1. Open the project in VS Code
+2. Press `F5` to launch extension development host
+3. Test features in the new VS Code window
 
-## Learn More
+### Building
+```bash
+npm run compile
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Linting
+```bash
+npm run lint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Testing
+```bash
+npm test
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API Integration
 
-## Deploy on Vercel
+Currently supports Google's Generative AI (Gemini). To use:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Get an API key from [Google AI Studio](https://makersuite.google.com/)
+2. Add the key to your VS Code settings
+3. Start using Neon Agent!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## Roadmap
+
+- [ ] Multi-model AI support (OpenAI, Anthropic, etc.)
+- [ ] Custom code templates and snippets
+- [ ] Team collaboration features
+- [ ] Plugin marketplace integration
+- [ ] Advanced debugging assistance
+- [ ] Code review automation
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## Support
+
+- Create an issue for bug reports or feature requests
+- Join our community discussions
+- Check the documentation for detailed guides
+
+---
+
+**Neon Agent** - Empowering developers with AI-driven coding assistance.
