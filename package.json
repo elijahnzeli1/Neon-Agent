@@ -1,98 +1,298 @@
 {
   "name": "neon-agent",
-  "displayName": "Neon Agent",
-  "description": "AI-powered coding agent extension for VS Code",
-  "version": "0.0.1",
+  "displayName": "Neon Agent - AI Coding Assistant",
+  "description": "Advanced AI-powered coding assistant with real-time completion, intelligent refactoring, and comprehensive code analysis",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.74.0"
   },
   "categories": [
-    "Other",
     "Machine Learning",
-    "AI"
+    "Programming Languages",
+    "Snippets",
+    "Other"
   ],
-  "activationEvents": [],
-  "main": "./src/extension.js",
+  "keywords": [
+    "ai",
+    "artificial intelligence",
+    "code completion",
+    "refactoring",
+    "code analysis",
+    "documentation",
+    "openai",
+    "anthropic",
+    "google ai"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "neon-agent.activate",
-        "title": "Activate Neon Agent"
+        "command": "neonAgent.openChat",
+        "title": "Open AI Chat",
+        "category": "Neon Agent",
+        "icon": "$(comment-discussion)"
       },
       {
-        "command": "neon-agent.chat",
-        "title": "Open Neon Agent Chat"
+        "command": "neonAgent.explainCode",
+        "title": "Explain Code",
+        "category": "Neon Agent",
+        "icon": "$(info)"
       },
       {
-        "command": "neon-agent.analyze",
-        "title": "Analyze Code with Neon Agent"
+        "command": "neonAgent.findBugs",
+        "title": "Find Bugs",
+        "category": "Neon Agent",
+        "icon": "$(bug)"
+      },
+      {
+        "command": "neonAgent.generateTests",
+        "title": "Generate Tests",
+        "category": "Neon Agent",
+        "icon": "$(beaker)"
+      },
+      {
+        "command": "neonAgent.extractFunction",
+        "title": "Extract Function",
+        "category": "Neon Agent",
+        "icon": "$(symbol-function)"
+      },
+      {
+        "command": "neonAgent.extractVariable",
+        "title": "Extract Variable",
+        "category": "Neon Agent",
+        "icon": "$(symbol-variable)"
+      },
+      {
+        "command": "neonAgent.optimizeCode",
+        "title": "Optimize Code",
+        "category": "Neon Agent",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "neonAgent.generateDocs",
+        "title": "Generate Documentation",
+        "category": "Neon Agent",
+        "icon": "$(book)"
+      },
+      {
+        "command": "neonAgent.addComments",
+        "title": "Add Comments",
+        "category": "Neon Agent",
+        "icon": "$(comment)"
+      },
+      {
+        "command": "neonAgent.generateReadme",
+        "title": "Generate README",
+        "category": "Neon Agent",
+        "icon": "$(markdown)"
+      },
+      {
+        "command": "neonAgent.configureApi",
+        "title": "Configure AI Provider",
+        "category": "Neon Agent",
+        "icon": "$(settings-gear)"
       }
     ],
     "keybindings": [
       {
-        "command": "neon-agent.chat",
-        "key": "ctrl+shift+n",
-        "mac": "cmd+shift+n"
+        "command": "neonAgent.openChat",
+        "key": "ctrl+shift+a",
+        "mac": "cmd+shift+a"
+      },
+      {
+        "command": "neonAgent.explainCode",
+        "key": "ctrl+shift+e",
+        "mac": "cmd+shift+e",
+        "when": "editorHasSelection"
+      },
+      {
+        "command": "neonAgent.extractFunction",
+        "key": "ctrl+shift+f",
+        "mac": "cmd+shift+f",
+        "when": "editorHasSelection"
       }
     ],
     "menus": {
-      "explorer/context": [
-        {
-          "command": "neon-agent.analyze",
-          "group": "neon-agent"
-        }
-      ],
       "editor/context": [
         {
-          "command": "neon-agent.analyze",
-          "group": "neon-agent"
+          "submenu": "neonAgent.submenu",
+          "group": "neonAgent",
+          "when": "!inOutput"
+        }
+      ],
+      "neonAgent.submenu": [
+        {
+          "command": "neonAgent.explainCode",
+          "when": "editorHasSelection",
+          "group": "analysis"
+        },
+        {
+          "command": "neonAgent.findBugs",
+          "group": "analysis"
+        },
+        {
+          "command": "neonAgent.generateTests",
+          "when": "editorHasSelection",
+          "group": "analysis"
+        },
+        {
+          "command": "neonAgent.extractFunction",
+          "when": "editorHasSelection",
+          "group": "refactoring"
+        },
+        {
+          "command": "neonAgent.extractVariable",
+          "when": "editorHasSelection",
+          "group": "refactoring"
+        },
+        {
+          "command": "neonAgent.optimizeCode",
+          "group": "refactoring"
+        },
+        {
+          "command": "neonAgent.generateDocs",
+          "group": "documentation"
+        },
+        {
+          "command": "neonAgent.addComments",
+          "group": "documentation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "neonAgent.extractFunction",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "neonAgent.extractVariable",
+          "when": "editorHasSelection"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "neonAgent.submenu",
+        "label": "🤖 Neon Agent"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "type": "webview",
+          "id": "neonAgent.chatView",
+          "name": "AI Assistant",
+          "when": "true",
+          "icon": "$(comment-discussion)"
         }
       ]
     },
     "configuration": {
       "title": "Neon Agent",
       "properties": {
-        "neon-agent.apiKey": {
+        "neonAgent.ai.provider": {
           "type": "string",
-          "default": "",
-          "description": "API Key for AI service"
+          "enum": [
+            "openai",
+            "anthropic",
+            "google",
+            "local"
+          ],
+          "default": "openai",
+          "description": "AI provider to use for code assistance"
         },
-        "neon-agent.model": {
+        "neonAgent.ai.apiKey": {
           "type": "string",
-          "default": "gemini-pro",
-          "description": "AI Model to use"
+          "description": "API key for the selected AI provider (can also be set via NEON_AGENT_API_KEY environment variable)"
         },
-        "neon-agent.autoSuggest": {
+        "neonAgent.ai.model": {
+          "type": "string",
+          "description": "AI model to use (e.g., gpt-4, claude-3-sonnet-20240229, gemini-pro)"
+        },
+        "neonAgent.ai.baseUrl": {
+          "type": "string",
+          "description": "Custom base URL for AI API (useful for local models or proxies)"
+        },
+        "neonAgent.ai.temperature": {
+          "type": "number",
+          "default": 0.7,
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Controls randomness in AI responses (0 = deterministic, 1 = balanced, 2 = creative)"
+        },
+        "neonAgent.ai.maxTokens": {
+          "type": "number",
+          "default": 2048,
+          "minimum": 100,
+          "maximum": 8192,
+          "description": "Maximum number of tokens in AI responses"
+        },
+        "neonAgent.completion.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "Enable automatic code suggestions"
+          "description": "Enable AI-powered code completion"
+        },
+        "neonAgent.completion.contextLines": {
+          "type": "number",
+          "default": 20,
+          "minimum": 5,
+          "maximum": 100,
+          "description": "Number of lines to include as context for code completion"
+        },
+        "neonAgent.completion.debounceMs": {
+          "type": "number",
+          "default": 300,
+          "minimum": 100,
+          "maximum": 1000,
+          "description": "Debounce delay in milliseconds for completion requests"
         }
       }
     }
   },
   "scripts": {
-    "start": "node src/standalone-server.js",
-    "dev": "nodemon src/standalone-server.js",
     "vscode:prepublish": "npm run compile",
-    "compile": "echo 'No compilation needed for JavaScript'",
-    "watch": "nodemon src/extension.js",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext js",
-    "test": "node ./test/runTest.js"
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish",
+    "start-server": "node src/standalone-server.js",
+    "dev-server": "nodemon src/standalone-server.js"
   },
   "devDependencies": {
     "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
     "eslint": "^8.28.0",
+    "typescript": "^4.9.4",
+    "@vscode/test-electron": "^2.2.0",
+    "@vscode/vsce": "^2.15.0",
     "nodemon": "^3.1.10"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.20.0",
-    "axios": "^1.4.0",
-    "body-parser": "^1.20.1",
-    "cors": "^2.8.5",
+    "openai": "^4.0.0",
+    "@anthropic-ai/sdk": "^0.24.0",
+    "@google/generative-ai": "^0.15.0",
     "express": "^4.18.2",
-    "helmet": "^6.0.1",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
     "morgan": "^1.10.0",
+    "body-parser": "^1.20.2",
     "ws": "^8.13.0"
-  }
+  },
+  "publisher": "neon-agent",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elijahnzeli1/Neon-Agent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elijahnzeli1/Neon-Agent/issues"
+  },
+  "homepage": "https://github.com/elijahnzeli1/Neon-Agent#readme",
+  "license": "MIT"
 }
