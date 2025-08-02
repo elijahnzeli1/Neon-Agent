@@ -3,6 +3,8 @@
   "displayName": "Neon Agent - AI Coding Assistant",
   "description": "Advanced AI-powered coding assistant with real-time completion, intelligent refactoring, and comprehensive code analysis",
   "version": "1.0.0",
+  "publisher": "neon-agent",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.74.0"
   },
